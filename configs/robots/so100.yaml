@@ -1,0 +1,32 @@
+# SO-ARM100 — 6-DoF affordable tabletop arm (LeRobot community).
+# These numbers are reasonable defaults; calibrate against your own hardware
+# before relying on them for real commands.
+
+name: so100
+n_dof: 6
+urdf: ~  # path to URDF; set via `--urdf` on the command line
+end_effector_link: gripper
+
+# Per-axis dynamic limits used by the feasibility QP. Conservative relative
+# to the hardware maximums so the final trajectory has headroom for
+# disturbance rejection on the embedded controller.
+v_max: 0.35   # m/s
+a_max: 1.2    # m/s²
+j_max: 20.0   # m/s³
+
+# Joint limits (radians). Only used as a sanity-check by the IK retargeter;
+# authoritative limits come from the URDF.
+joint_limits:
+  - [-3.14,  3.14]   # shoulder_pan
+  - [-1.57,  1.57]   # shoulder_lift
+  - [-1.57,  1.57]   # elbow_flex
+  - [-1.57,  1.57]   # wrist_flex
+  - [-3.14,  3.14]   # wrist_roll
+  - [ 0.00,  1.00]   # gripper
+
+# Workspace bounds used for optional clamp at the end of the pipeline.
+# Units: metres, robot base frame.
+workspace:
+  x: [-0.25, 0.40]
+  y: [-0.25, 0.25]
+  z: [ 0.02, 0.40]
