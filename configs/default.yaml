@@ -1,0 +1,52 @@
+pipeline:
+  target_fps: 20  
+  prefer_hand: Right
+  scale_hint: 0.18  
+ingest:
+  min_detection_confidence: 0.6
+  min_tracking_confidence: 0.5
+  max_frames: null            
+
+phases:
+
+  override_means: null
+  override_stds: null
+
+qa:
+  spectral:
+    ntaps: 65
+    tremor_band_hz: [8.0, 12.0]
+    tremor_attenuation_db: 20.0
+
+  manifold:
+    n_steps: 60
+    lr: 5.0e-3
+    lambda_rec: 1.0
+    lambda_prior: 0.02
+    position_weight: 1.0
+    orientation_weight: 0.25
+
+  dynamics:
+    v_max: 0.6   # metres / second
+    a_max: 2.0   # metres / second²
+    j_max: 40.0  # metres / second³
+    phase_overrides:
+      grasp:
+        v_max: 0.15
+        a_max: 0.8
+        j_max: 10.0
+      release:
+        v_max: 0.20
+        a_max: 1.0
+        j_max: 12.0
+
+reference_bank:
+  sources:
+    - lerobot/pusht
+    - NeilKim/so100
+    - miyen/teleop
+  max_episodes_per_source: 50
+
+output:
+  format: parquet
+  plots_dir: outputs/plots

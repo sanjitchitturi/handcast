@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "handcast"
+version = "0.1.0"
+description = "Manifold-Constrained Retargeting of Egocentric Motion to Embodied Agents"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "HandCast" }]
+keywords = [
+    "robotics",
+    "retargeting",
+    "imitation-learning",
+    "egocentric",
+    "manipulation",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "torch>=2.1",
+    "opencv-python>=4.8",
+    "mediapipe>=0.10",
+    "osqp>=0.6.5",
+    "pyyaml>=6.0",
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+    "tqdm>=4.65",
+    "datasets>=2.14",
+    "urdfpy>=0.0.22",
+    "yt-dlp>=2024.1.0",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.3",
+    "mypy>=1.7",
+    "pre-commit>=3.5",
+]
+docs = [
+    "mkdocs>=1.5",
+    "mkdocs-material>=9.4",
+]
+
+[project.scripts]
+handcast = "handcast.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["handcast*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RET"]
+ignore = ["E501"]  # handled by formatter
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-v --tb=short"
